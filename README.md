@@ -44,15 +44,12 @@
 | Scalability | Serverless services like AWS Lambda, DynamoDB, S3, and API Gateway automatically scale to handle increased load. Lambda runs more function instances as requests rise, DynamoDB adjusts capacity for traffic, S3 handles unlimited storage and access, and API Gateway manages thousands of concurrent API calls without manual intervention. |
 | Performance | Serverless services like AWS Lambda, DynamoDB, S3, and API Gateway deliver consistent performance by automatically provisioning resources, optimizing compute and storage, and scaling in response to workload, ensuring low-latency responses. |
 | Availability | Serverless services like AWS Lambda, DynamoDB, S3, and API Gateway are designed for high availability. AWS automatically distributes resources across multiple data centers, ensures redundancy, and handles failures, keeping applications accessible without manual intervention. |
-| Simplicity | For the simplicity of having a single shared deployment process, Lambda functions are packaged and deployed via the Terraform config. However, this approach is cumbersome when making updates to the Lambda handler. In a production scenario, I would use the Serverless framework. |
+| Simplicity | For the simplicity of having a single shared deployment process, Lambda functions are packaged and deployed via the Terraform config. However, this approach is cumbersome when making updates to the Lambda handler. In a production scenario, I would use the Serverless framework. https://www.serverless.com/ |
 | Observability | AWS Lambda is tightly integrated with CloudWatch, automatically capturing logs and metrics for every function invocation, making it easy to troubleshoot, optimize performance, and achieve good observability. |
 | Lambda Cold Starts | For infrequently used Lambda functions, "cold-starts" can be an issue for languages like Java which informed my use of Python. |
 | Function Granularity | For simplicity, the different tasks are implemented within a single handler. A more fine-grained appoach (separate handlers for upload, list etc.) enables efficient scaling but may increase orchestration complexity. |
 | Security | Using the principle of "least privilege", the Lambda execution role should only have access to S3 & DDB permissions that it requires. However, for brevity, the role has access to all S3 & DDB permissions. |
-| Cost | S3 is a relatively low-cost object storage service and provides support for lifecycle rules which move older objects to even lower-cost "cold storage". |
-
-
-## Testing
+| Cost Management | S3 is a relatively low-cost object storage service and provides support for lifecycle rules which move older objects to even lower-cost "cold storage". |
 
 
 ## Use of AI
@@ -64,18 +61,10 @@ As the use of AI was encouraged for this assignment, I used Co-pilot and ChatGPT
 - creating an upload script to eliminate need to copy/paste tokens and URLs between curl commands
 
 
-## Assumptions
-
-## Dependencies
-
-## Caveats
-
-
-
 ## Future Improvements
 
 - Manage Terraform state remotely
-- Proper test framework
+- Proper test framework - top candidates are PyUnit for unit testing, LocalStack and Serverless for test Lambda functions, BDD testing using Cucumber feature files. 
 
 
 ## Installation
