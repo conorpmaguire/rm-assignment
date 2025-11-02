@@ -4,7 +4,7 @@
 
 > As a university professor, I want a simple way to share resource files with my students. Your task is to build a lightweight file-sharing API that supports uploads and downloads, stores files on disk, and makes it easy to retrieve shared files via a simple HTTP endpoint.
 
-## Requirements
+## Assignment Requirements
 
 | Req # | Requirement | Description |
 | --- | --- | ----------- |
@@ -14,9 +14,9 @@
 | 4 | File Metadata to include File name, Size (in bytes), Upload timestamp, Unique ID |  | 
 | 5 | No authentication required | No AWS credentials are needed locally — the pre-signed URL already contains temporary credentials. |
 | 6 | Max file size: 20MB | Achieved using a pre-signed POST URLs with a 'content-length-range' condition |
-| 7 | What happens if something goes wrong during a request? How does the API communicate this to a client? |  |
+| 7 | What happens if something goes wrong during a request? How does the API communicate this to a client? | The server will return an error code if something goes wrong. A "404" error is returned if no HTTP method is supplied. A generic "500" error, along with a specific error message, is returned if the server fails. |
 | 8 | How can you confirm the code works? |  |
-| 9 | How can someone else run and test the API quickly? |  |
+| 9 | How can someone else run and test the API quickly? | Please follow the steps contained in the "Installation" section below. |
 
 
 ## File Structure
@@ -78,7 +78,9 @@ As the use of AI was encouraged for this assignment, I used Co-pilot and ChatGPT
 - Proper test framework
 
 
-## Build Lambda Function & Other Infrastructure **
+## Installation
+
+## Step 1 - Build Lambda Function & Other Infrastructure
 ```bash
 cd lambda
 pip install -r requirements.txt -t .
@@ -86,15 +88,19 @@ cd ../terraform
 terraform init
 terraform apply
 ```
-
-### Note the API endpoint URL that is output after the Terraform config is applied - this URL is used subsequent commands
+** Note the API endpoint URL that is output after the Terraform config is applied - this URL is used in subsequent commands **
 ```bash
 api_endpoint = "https://smwrz81zqf.execute-api.eu-west-1.amazonaws.com"
 ```
 
 
+## Step 2a - UPLOAD - Run the Upload Script (the easy option!)
+```bash
 ./upload.sh "ResMed_Assignment_1.pdf" "application/pdf" "https://smwrz81zqf.execute-api.eu-west-1.amazonaws.com"
+```
 
+
+## Step 2b UPLOAD (Alternative) - Run the curl commands separately (cumbersome and error-prone!)
 
 ### Obtain a presigned URL
 ```bash
@@ -116,7 +122,6 @@ curl -X POST https://resmed-fileshare-files.s3.amazonaws.com/ \
 ```
 
 
-
 ### Upload the file using the presigned URL
 ```bash
 curl -X PUT -T ResMed_Assignment_1.pdf \
@@ -124,17 +129,14 @@ curl -X PUT -T ResMed_Assignment_1.pdf \
 "https://resmed-fileshare-files.s3.amazonaws.com/uploads/da80df6f-005b-4e99-a565-470219267055-RedMed_Assignment_1.pdf?AWSAccessKeyId=ASIA5GWBOBYPDE4RIA6E&Signature=ZP9xdIeBAIo3qqFNbOQjjwFFdxo%3D&content-type=application%2Fpdf&x-amz-security-token=IQoJb3JpZ2luX2VjECYaCWV1LXdlc3QtMSJHMEUCIHV9T%2BjfGIlpaz44zQT44mnnI8IURniLGRewpzN4R2DAAiEAtrbzZUZJucDJlpDGp84CtVz7Tj0Vr7VSHDMCYAh4VQcq%2FQII3v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw5MDc3MTc1MTI3MzQiDICfR0BWfYmB8fWDNCrRAoxAF17JPZwPZTYfNOyl1Nzt8B9HTi3XQ8IINxu8rJJuFpFAErZfwEfDC%2BSsSG2ejWpdgxieFbW2k6EgMXcqHpmpX6HBOJ2thE5yzDI07KaQJQJhmKwWT%2FwH7tSFpsTWyAhQhs8wlqsAjor%2B8iKXrVIEceFZ%2BSbAkQhrKJAzwowSLO2lyek6EXzKCh2hLpsypuCLAng9MowH4fjxWl3qWGykSoPNAURQ9L0SmNssS1gIbIFqMipxelHUURh1KLhwyHf%2FLk9KCfBqoDRPRcK46yI8MB%2FywT9svAsbKSIaPVmyRlTkdAS22QkTwGbaGAEVcWJyH%2BtmDo4IwBFf%2BZgThQFu0qA0v%2BBps1oYn9w6qYVK8xUT1bg9y8SftsF89i2opdfRQFLSJiyVhySmaCRCo1XjvWVfOsZj5CXkm6qkFLW%2FzcDMzijbCcn44ERlDsUYn9IwjIaKyAY6ngG%2BwKuBYDlIvksel5bw2%2BYhbNMEpxV6vtGjJP%2FOEyOkq5CGjf9grbi92Kw0rjh46vQR%2BzoVEUEoE6kq0IKaVGU7DTixC257J6vLZsHKUH%2FpkyipnAOR9GE8UKemrs%2FfjDezpW0MLbXC6ooKRyBatkIlLglXXYwsf3BG4NQzuOpudFPf6t4fx44tdTNB9iYx2oluK8dZEvNoZBfBoI0iiQ%3D%3D&Expires=1761772601"
 ```
 
-### List all files:
+
+## Step 3 - LIST - List all files
 ```bash
 curl https://smwrz81zqf.execute-api.eu-west-1.amazonaws.com/files
 ```
 
-### Retrieve a file's metadata:
+
+## Step 4 - LIST - Get file metadata and generate a presigned download URL:
 ```bash
 curl https://smwrz81zqf.execute-api.eu-west-1.amazonaws.com/files/da80df6f-005b-4e99-a565-470219267055
-```
-
-### Get a presigned URL for downloading a file:
-```bash
-curl https://abc123.execute-api.us-east-1.amazonaws.com/files/uuid-1234
 ```
