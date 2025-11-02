@@ -64,7 +64,8 @@ As the use of AI was encouraged for this assignment, I used Co-pilot and ChatGPT
 ## Future Improvements
 
 - Manage Terraform state remotely
-- Proper test framework - top candidates are PyUnit for unit testing, LocalStack and Serverless for test Lambda functions, BDD testing using Cucumber feature files. 
+- Proper test framework - top candidates are PyUnit for unit testing, LocalStack and Serverless for test Lambda functions, BDD testing using Cucumber feature files.
+- Implement transaction handling on the file upload where if the saving of file metadata fails, then the file is removed from S3. This eliminates "orphan" files.
 
 
 ## Installation
