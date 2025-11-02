@@ -3,7 +3,7 @@
 # Usage: ./upload.sh <filename> <content-type> <upload-api-url>
 #
 # Example:
-#   ./upload.sh "ResMed_Assignment_1.pdf" "application/pdf" "https://abc.execute-api.eu-west-1.amazonaws.com/upload"
+#   ./upload.sh "ResMed_Assignment_1.pdf" "application/pdf" "https://smwrz81zqf.execute-api.eu-west-1.amazonaws.com"
 #
 # Requirements:
 #   - curl
