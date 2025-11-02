@@ -28,12 +28,12 @@
 ├── lambda
 │   ├── README.md
 │   ├── requirements.txt
-│   └── main.py
+│   └── handler.py
 └── terraform
     ├── main.tf
-    ├── variables.tf
-    ├── outputs.tf
-    └── lambda.tf
+    ├── provider.tf
+    ├── output.tf
+    └── variables.tf
 ```
 
 
