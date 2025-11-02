@@ -48,10 +48,21 @@ def upload_file(event):
     s3_key = f"uploads/{file_id}-{filename}"
 
     # Generate presigned PUT URL (valid for 5 minutes)
-    upload_url = s3.generate_presigned_url(
-        "put_object",
-        Params={"Bucket": BUCKET_NAME, "Key": s3_key, "ContentType": contentType},
-        ExpiresIn=300,
+    # upload_url = s3.generate_presigned_url(
+    #     "put_object",
+    #     Params={"Bucket": BUCKET_NAME, "Key": s3_key, "ContentType": contentType},
+    #     ExpiresIn=300,
+    # )
+
+    upload_url = s3.generate_presigned_post(
+        Bucket=BUCKET_NAME,
+        Key=s3_key,
+        Fields={"Content-Type": contentType},
+        Conditions=[
+            ["content-length-range", 1, 20 * 1024 * 1024],  # 1 byte – 20 MB
+            {"Content-Type": contentType}
+        ],
+        ExpiresIn=300
     )
 
     # Store initial metadata in DynamoDB

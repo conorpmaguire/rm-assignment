@@ -1,3 +1,10 @@
+# Custom
+lambda/lambda.zip
+terraform/.terraform.lock.hcl
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
