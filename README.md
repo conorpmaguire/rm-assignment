@@ -14,9 +14,9 @@
 | 4 | File Metadata to include File name, Size (in bytes), Upload timestamp, Unique ID | Metadata is stored in DynamoDB: https://github.com/conorpmaguire/rm-assignment/blob/05fa0a7fa7c49fb7d81a115e24f3e30d3c211cf3/lambda/handler.py#L62 | 
 | 5 | No authentication required | No AWS credentials are needed locally — the pre-signed URL already contains temporary credentials. https://github.com/conorpmaguire/rm-assignment/blob/2bf665ae35236b4380d9295d8e4c2d3065c2faf6/lambda/handler.py#L50 |
 | 6 | Max file size: 20MB | Achieved using a pre-signed POST URLs with a 'content-length-range' condition https://github.com/conorpmaguire/rm-assignment/blob/2bf665ae35236b4380d9295d8e4c2d3065c2faf6/lambda/handler.py#L55 |
-| 7 | What happens if something goes wrong during a request? How does the API communicate this to a client? | The server will return an error code if something goes wrong. A "404" error is returned if no HTTP method is supplied. A generic "500" error, along with a specific error message, is returned if the server fails. |
+| 7 | What happens if something goes wrong during a request? How does the API communicate this to a client? | The server will return an error code if something goes wrong. A "404" error is returned if no HTTP method is supplied. A generic "500" error, along with a specific error message, is returned if the server fails. https://github.com/conorpmaguire/rm-assignment/blob/2bf665ae35236b4380d9295d8e4c2d3065c2faf6/lambda/handler.py#L33 |
 | 8 | How can you confirm the code works? | Code was fully tested end-to-end using the test steps outlined below. Validation prevented files larger than 20MB from being uploaded |
-| 9 | How can someone else run and test the API quickly? | Please follow the steps contained in the "Installation" section below. https://github.com/conorpmaguire/rm-assignment/blob/2bf665ae35236b4380d9295d8e4c2d3065c2faf6/lambda/handler.py#L33 |
+| 9 | How can someone else run and test the API quickly? | Please follow the steps contained in the "Installation" section below. |
 
 
 ## File Structure
