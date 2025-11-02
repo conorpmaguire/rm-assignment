@@ -8,14 +8,18 @@
 
 | Req # | Requirement | Description |
 | --- | --- | ----------- |
-| 1 | POST: Accepts a file upload (multipart/form-data). Returns a unique file ID or name used to retrieve it later |  |
-| 2 | GET: Downloads the file associated with the given ID |  |
-| 3 | GET: Lists all uploaded files (metadata only - no content) |  | 
-| 4 | File Metadata to include File name, Size (in bytes), Upload timestamp, Unique ID |  | 
+| 1 | POST: Accepts a file upload (multipart/form-data). Returns a unique file ID or name used to retrieve it later | Implemented in Lambda handler path "/upload"  
+https://github.com/conorpmaguire/rm-assignment/blob/05fa0a7fa7c49fb7d81a115e24f3e30d3c211cf3/lambda/handler.py#L22 |
+| 2 | GET: Lists all uploaded files (metadata only - no content) | Implemented in Lambda handler path "/files"  
+https://github.com/conorpmaguire/rm-assignment/blob/05fa0a7fa7c49fb7d81a115e24f3e30d3c211cf3/lambda/handler.py#L24 | 
+| 3 | GET: Downloads the file associated with the given ID | Implemented in Lambda handler path "/files/{id}"  
+https://github.com/conorpmaguire/rm-assignment/blob/05fa0a7fa7c49fb7d81a115e24f3e30d3c211cf3/lambda/handler.py#L26 |
+| 4 | File Metadata to include File name, Size (in bytes), Upload timestamp, Unique ID | Metadata is stored in DynamoDB:  
+https://github.com/conorpmaguire/rm-assignment/blob/05fa0a7fa7c49fb7d81a115e24f3e30d3c211cf3/lambda/handler.py#L62 | 
 | 5 | No authentication required | No AWS credentials are needed locally — the pre-signed URL already contains temporary credentials. |
 | 6 | Max file size: 20MB | Achieved using a pre-signed POST URLs with a 'content-length-range' condition |
 | 7 | What happens if something goes wrong during a request? How does the API communicate this to a client? | The server will return an error code if something goes wrong. A "404" error is returned if no HTTP method is supplied. A generic "500" error, along with a specific error message, is returned if the server fails. |
-| 8 | How can you confirm the code works? |  |
+| 8 | How can you confirm the code works? | Code was fully tested end-to-end using the test steps outlined below. |
 | 9 | How can someone else run and test the API quickly? | Please follow the steps contained in the "Installation" section below. |
 
 
